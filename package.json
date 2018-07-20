@@ -1,7 +1,7 @@
 {
   "name": "@firestitch/connection",
   "description": "@firestitch/connection",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/Firestitch/fs-connection"
@@ -114,8 +114,6 @@
     "node": ">=6.0.0"
   },
   "peerDependencies": {
-    "@types/offline-js": "^0.7.28",
     "offline-js": "^0.7.19"
-  },
-  "dependencies": {}
+  }
 }
