@@ -15,13 +15,12 @@ import 'styles.scss';
   declarations: [
   ],
   providers: [
-    // FsComponentService,
   ],
 })
-export class FsComponentModule {
+export class FsConnectionModule {
   static forRoot(): ModuleWithProviders {
     return {
-      ngModule: FsComponentModule,
+      ngModule: FsConnectionModule,
       providers: [FsConnectionService]
     };
   }
