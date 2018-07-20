@@ -2,7 +2,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FsConnectionService } from './services/';
 
-import 'styles.scss';
+import './styles.scss';
 
 @NgModule({
   imports: [
@@ -21,7 +21,7 @@ export class FsConnectionModule {
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: FsConnectionModule,
-      providers: [FsConnectionService]
+      providers: [ FsConnectionService ]
     };
   }
 }

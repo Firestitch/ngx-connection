@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app/app.component';
 import { BrowserModule } from '@angular/platform-browser';
-import { FsComponentModule } from '../src';
+import { FsConnectionModule } from '../src';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppMaterialModule } from './app/material.module';
 import { FsExampleModule } from '@firestitch/example';
@@ -15,7 +15,7 @@ import { ConnectionBaseExampleComponent } from './app/components';
   bootstrap: [ AppComponent ],
   imports: [
     BrowserModule,
-    FsComponentModule.forRoot(),
+    FsConnectionModule.forRoot(),
     BrowserAnimationsModule,
     AppMaterialModule,
     FormsModule,
