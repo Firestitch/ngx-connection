@@ -1,8 +1,8 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FsConnectionService } from './services/';
 
-import './styles.scss';
+import { FsConnectionService } from './services/connection.service';
+
 
 @NgModule({
   imports: [

@@ -1,15 +1,18 @@
-import './styles.scss';
-
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { AppComponent } from './app/app.component';
 import { BrowserModule } from '@angular/platform-browser';
-import { FsConnectionModule } from '../src';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AppMaterialModule } from './app/material.module';
+
+import { FsConnectionModule } from '@firestitch/connection';
 import { FsExampleModule } from '@firestitch/example';
-import { ConnectionBaseExampleComponent } from './app/components';
+import { FsMessageModule } from '@firestitch/message';
+import { ToastrModule } from 'ngx-toastr';
+
+import { AppComponent } from './app.component';
+import { AppMaterialModule } from './material.module';
+import { ConnectionBaseExampleComponent } from './components';
+
 
 @NgModule({
   bootstrap: [ AppComponent ],
@@ -19,8 +22,10 @@ import { ConnectionBaseExampleComponent } from './app/components';
     BrowserAnimationsModule,
     AppMaterialModule,
     FormsModule,
-    FsExampleModule,
     RouterModule,
+    FsExampleModule.forRoot(),
+    ToastrModule.forRoot({ preventDuplicates: true }),
+    FsMessageModule.forRoot(),
   ],
   entryComponents: [
   ],

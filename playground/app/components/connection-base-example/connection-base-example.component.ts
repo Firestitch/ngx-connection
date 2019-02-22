@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FsConnectionService } from '../../../../src/services/fs-connection.service';
-import { Subscription } from 'rxjs/Subscription';
+import { FsConnectionService } from '@firestitch/connection';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'connection-base-example',
