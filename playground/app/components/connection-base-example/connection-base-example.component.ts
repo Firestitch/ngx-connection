@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FsConnectionService } from '@firestitch/connection';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'connection-base-example',
@@ -8,25 +9,32 @@ import { Subscription } from 'rxjs';
 })
 export class ConnectionBaseExampleComponent implements OnInit, OnDestroy {
 
-  private _upSubscription: Subscription;
-  private _downSubscription: Subscription;
+  private _destroy$ = new Subject();
 
   constructor(private _connection: FsConnectionService) {
 
   }
 
   public ngOnInit() {
-    this._upSubscription = this._connection.up().subscribe(() => {
-      console.log('subscribe in example up');
+    this._connection.up()
+    .pipe(
+      takeUntil(this._destroy$)
+    )
+    .subscribe(() => {
+      console.log('Connection Up');
     });
 
-    this._downSubscription = this._connection.down().subscribe(() => {
-      console.log('subscribe in example down');
+    this._connection.down()
+    .pipe(
+      takeUntil(this._destroy$)
+    )
+    .subscribe(() => {
+      console.log('Connection Down');
     });
   }
 
   public ngOnDestroy() {
-    this._upSubscription.unsubscribe();
-    this._downSubscription.unsubscribe();
+    this._destroy$.next();
+    this._destroy$.complete();
   }
 }

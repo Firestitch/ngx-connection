@@ -29,7 +29,6 @@ export class FsConnectionService {
     this._downHandler = this.downEvent.bind(this);
     this._upHandler = this.upEvent.bind(this);
 
-
     Offline.on('down', this._downHandler);
     Offline.on('up', this._upHandler);
   }
@@ -61,7 +60,7 @@ export class FsConnectionService {
   private setOptions() {
     Offline.options = {
       // Should we check the connection status immediatly on page load.
-      checkOnLoad: true,
+      checkOnLoad: false,
 
       // Should we monitor AJAX requests to help decide if we have a connection.
       interceptRequests: true,
@@ -70,7 +69,7 @@ export class FsConnectionService {
       reconnect: false,
 
       // Should we store and attempt to remake requests which fail while the connection is down.
-      requests: true,
+      requests: false,
 
       // Should we show a snake game while the connection is down to keep the user entertained?
       // It's not included in the normal build, you should bring in js/snake.js in addition to

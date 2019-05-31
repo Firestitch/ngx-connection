@@ -7,15 +7,7 @@ import { FsConnectionService } from './services/connection.service';
 @NgModule({
   imports: [
     CommonModule,
-  ],
-  exports: [
-  ],
-  entryComponents: [
-  ],
-  declarations: [
-  ],
-  providers: [
-  ],
+  ]
 })
 export class FsConnectionModule {
   static forRoot(): ModuleWithProviders {

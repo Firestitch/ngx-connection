@@ -27,14 +27,10 @@ import { ConnectionBaseExampleComponent } from './components';
     ToastrModule.forRoot({ preventDuplicates: true }),
     FsMessageModule.forRoot(),
   ],
-  entryComponents: [
-  ],
   declarations: [
     AppComponent,
     ConnectionBaseExampleComponent
-  ],
-  providers: [
-  ],
+  ]
 })
 export class PlaygroundModule {
 }

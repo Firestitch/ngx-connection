@@ -9,7 +9,35 @@ There you can change background color and styles for the panel.
   color: #fff;
   top: auto;
   bottom: 0;
-  border-radius: 4px 4px 0 0;
+  border-radius: unset;
+  width: auto;
+  display: flex;
+  justify-content: center;
+
+  &.offline-ui-up {
+    display: none;
+  }
+
+  &.offline-ui-up-5s,
+  &.offline-ui-down {
+    display: flex !important;
+  }
+}
+
+.offline-ui.offline-ui-up .offline-ui-content:before {
+  content: "Internet connection restored.";
+}
+
+.offline-ui .offline-ui-content:after {
+  position: unset;
+  float: left;
+  margin-right: 9px;
+}
+
+.offline-ui .offline-ui-content {
+  padding: 0;
+  width: auto;
+  margin: auto;
 }
 
 /*
