@@ -10,7 +10,7 @@ import { FsConnectionService } from './services/connection.service';
   ]
 })
 export class FsConnectionModule {
-  static forRoot(): ModuleWithProviders {
+  static forRoot(): ModuleWithProviders<FsConnectionModule> {
     return {
       ngModule: FsConnectionModule,
       providers: [ FsConnectionService ]
