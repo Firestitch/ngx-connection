@@ -9,6 +9,7 @@
   ],
   "assets": [
     "./styles.scss",
-    "./app/styles/**/*.scss"
+    "./app/styles/**/*.scss",
+    "./app/styles/**/*.sass"
   ]
 }
