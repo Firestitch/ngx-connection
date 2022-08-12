@@ -2,7 +2,7 @@
   "name": "@firestitch/connection",
   "title": "Connection",
   "description": "@firestitch/connection",
-  "version": "12.0.2",
+  "version": "12.0.3",
   "repository": {
     "type": "git",
     "url": "https://github.com/Firestitch/ngx-connection"
@@ -58,7 +58,6 @@
     "ngx-highlightjs": "^4.1.4",
     "ngx-toastr": "^11.3.3",
     "npm-run-all": "^4.1.5",
-    "offline-js": "^0.7.19",
     "rxjs": "^6.5.5",
     "tslint": "~6.1.0",
     "typescript": "4.3.5",
@@ -68,10 +67,10 @@
     "node": ">=6.0.0"
   },
   "peerDependencies": {
-    "@types/offline-js": "^0.7.28",
-    "offline-js": "^0.7.19"
+    "@types/offline-js": "^0.7.28"
   },
   "dependencies": {
-    "tslib": "^2.0.0"
+    "tslib": "^2.0.0",
+    "offline-js": "^0.7.19"
   }
 }
