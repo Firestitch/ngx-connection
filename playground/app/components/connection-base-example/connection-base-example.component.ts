@@ -9,6 +9,8 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class ConnectionBaseExampleComponent implements OnInit, OnDestroy {
 
+  public showBanner = true;
+
   private _destroy$ = new Subject();
 
   constructor(
@@ -16,6 +18,7 @@ export class ConnectionBaseExampleComponent implements OnInit, OnDestroy {
     ) {}
 
   public ngOnInit() {
+    
     this._connection.up$
     .pipe(
       takeUntil(this._destroy$)
@@ -36,5 +39,10 @@ export class ConnectionBaseExampleComponent implements OnInit, OnDestroy {
   public ngOnDestroy() {
     this._destroy$.next();
     this._destroy$.complete();
+  }
+
+  public toggleBanner() {
+    this.showBanner = !this.showBanner;
+    this._connection.showBanner = this.showBanner;
   }
 }
