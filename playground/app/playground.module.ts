@@ -18,7 +18,9 @@ import { ConnectionBaseExampleComponent } from './components';
   bootstrap: [ AppComponent ],
   imports: [
     BrowserModule,
-    FsConnectionModule.forRoot(),
+    FsConnectionModule.forRoot({
+      showBanner: true,
+    }),
     BrowserAnimationsModule,
     AppMaterialModule,
     FormsModule,
@@ -30,7 +32,7 @@ import { ConnectionBaseExampleComponent } from './components';
   declarations: [
     AppComponent,
     ConnectionBaseExampleComponent
-  ]
+  ],
 })
 export class PlaygroundModule {
 }

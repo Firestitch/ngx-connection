@@ -1,8 +1,10 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Inject, Injectable, OnDestroy, Optional } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
 import 'offline-js';
 import { takeUntil } from 'rxjs/operators';
+import { FS_CONNECTION_CONFIG } from '../injectors';
+import { FsConnectionConfig } from '../interfaces';
 
 
 @Injectable()
@@ -15,9 +17,12 @@ export class FsConnectionService implements OnDestroy {
   private _downHandler: () => void;
   private _upHandler: () => void;
 
-  constructor() {
+  constructor(
+    @Optional() @Inject(FS_CONNECTION_CONFIG) private _config: FsConnectionConfig,
+  ) {
     this._setOptions();
     this._subscribe();
+    this.showBanner = _config.showBanner ?? true;
   }
 
   public get isDown() {
