@@ -6,6 +6,7 @@ import 'offline-js';
 
 @Injectable()
 export class FsConnectionService {
+
   private _downSub = new Subject<any>();
   private _upSub = new Subject<any>();
 
@@ -13,8 +14,8 @@ export class FsConnectionService {
   private _upHandler;
 
   constructor() {
-    this.setOptions();
-    this.subscribe();
+    this._setOptions();
+    this._subscribe();
   }
 
   get isDown() {
@@ -25,31 +26,23 @@ export class FsConnectionService {
     return Offline.state === 'up';
   }
 
-  public subscribe() {
-    this._downHandler = this.downEvent.bind(this);
-    this._upHandler = this.upEvent.bind(this);
+  public get down$(): Observable<any> {
+    return this._downSub.asObservable();
+  }
+
+  public get up$() {
+    return this._upSub.asObservable();
+  }
+
+  private _subscribe() {
+    this._downHandler = this._downEvent.bind(this);
+    this._upHandler = this._upEvent.bind(this);
 
     Offline.on('down', this._downHandler);
     Offline.on('up', this._upHandler);
   }
 
-  private downEvent() {
-    this._downSub.next();
-  }
-
-  private upEvent() {
-    this._upSub.next();
-  }
-
-  public down(): Observable<any> {
-    return this._downSub.asObservable();
-  }
-
-  public up() {
-    return this._upSub.asObservable();
-  }
-
-  public unsubscribe() {
+  private _unsubscribe() {
     Offline.off('down', this._downHandler);
     Offline.off('up', this._upHandler);
 
@@ -57,7 +50,15 @@ export class FsConnectionService {
     this._downSub.unsubscribe();
   }
 
-  private setOptions() {
+  private _downEvent() {
+    this._downSub.next();
+  }
+
+  private _upEvent() {
+    this._upSub.next();
+  }
+
+  private _setOptions() {
     Offline.options = {
       // Should we check the connection status immediatly on page load.
       checkOnLoad: false,

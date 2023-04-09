@@ -11,12 +11,12 @@ export class ConnectionBaseExampleComponent implements OnInit, OnDestroy {
 
   private _destroy$ = new Subject();
 
-  constructor(private _connection: FsConnectionService) {
-
-  }
+  constructor(
+    private _connection: FsConnectionService
+    ) {}
 
   public ngOnInit() {
-    this._connection.up()
+    this._connection.up$
     .pipe(
       takeUntil(this._destroy$)
     )
@@ -24,7 +24,7 @@ export class ConnectionBaseExampleComponent implements OnInit, OnDestroy {
       console.log('Connection Up');
     });
 
-    this._connection.down()
+    this._connection.down$
     .pipe(
       takeUntil(this._destroy$)
     )
