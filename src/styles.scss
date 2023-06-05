@@ -1,4 +1,37 @@
-@import "offline-js/themes/offline-theme-chrome.css";
+/**
+There is a custom theme for offline-ui.
+There you can change background color and styles for the panel.
+ */
 
-@import "./app/styles/offline-labels-variables.sass";
-@import "./app/styles/offline-custom-theme";
+ #fs-offline {
+  background: rgb(46 46 46 / 90%);
+  color: #fff;
+  top: auto;
+  bottom: 0;
+  border-radius: unset;
+  width: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 12px;
+
+  &:before {
+    display: block;
+    width: 12px;
+    height: 12px;
+    content: ' ';
+    border-radius: 50%;
+    margin-right: 6px;
+  }
+
+  &.fs-offline-down:before {
+    background: #ec8787;
+  }
+
+  &.fs-offline-up:before {
+    background: #90DA90;
+  }
+}

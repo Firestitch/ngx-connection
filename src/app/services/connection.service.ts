@@ -1,8 +1,7 @@
 import { Inject, Injectable, OnDestroy, Optional } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, timer } from 'rxjs';
 
-import 'offline-js';
-import { takeUntil } from 'rxjs/operators';
+import { filter, takeUntil } from 'rxjs/operators';
 import { FS_CONNECTION_CONFIG } from '../injectors';
 import { FsConnectionConfig } from '../interfaces';
 
@@ -10,8 +9,7 @@ import { FsConnectionConfig } from '../interfaces';
 @Injectable()
 export class FsConnectionService implements OnDestroy {
 
-  private _downSub = new Subject<any>();
-  private _upSub = new Subject<any>();
+  private _connection$ = new Subject<boolean>();
   private _destroy$ = new Subject();
 
   private _downHandler: () => void;
@@ -20,52 +18,60 @@ export class FsConnectionService implements OnDestroy {
   constructor(
     @Optional() @Inject(FS_CONNECTION_CONFIG) private _config: FsConnectionConfig,
   ) {
-    this._setOptions();
     this._subscribe();
-    this.showBanner = _config.showBanner ?? true;
   }
 
   public get isDown() {
-    return Offline.state === 'down';
+    return !navigator.onLine;
   }
 
   public get isUp() {
-    return Offline.state === 'up';
+    return navigator.onLine;
   }
 
   public get down$(): Observable<any> {
-    return this._downSub.asObservable()
+    return this._connection$.asObservable()
       .pipe(
+        filter((value) => !value),
         takeUntil(this._destroy$),
       );
   }
 
   public get up$() {
-    return this._upSub.asObservable()
+    return this._connection$.asObservable()
       .pipe(
+        filter((value) => value),
         takeUntil(this._destroy$),
       );
   }
 
   public set showBanner(value: boolean) {
+    let offline = document.getElementById('fs-offline');
+
     if(value) {
-      document.getElementById('fs-offline')?.remove();
+      if(offline) {
+        offline.textContent = 'Internet connection restored';
+        offline.classList.remove('fs-offline-down');
+        offline.classList.add('fs-offline-up');
+        setTimeout(() => {
+          offline.remove();
+        }, 4000);
+      }
     } else {
-      const el = document.createElement('style');
-      el.setAttribute('id', 'fs-offline');
-      el.appendChild(document
-        .createTextNode(`
-          .offline-ui.offline-ui-up { display: none !important }
-          .offline-ui.offline-ui-down { display: none !important }
-        `));
+      if(!offline) {
+        offline = document.createElement('div');
+        offline.setAttribute('id', 'fs-offline');
+        offline.classList.add('fs-offline-down');
+        offline.textContent = 'No iternet connection';
       
-      document.getElementsByTagName("head")[0].appendChild(el);
+        document.getElementsByTagName('body')[0].append(offline);
+      }
     }
   }
   
   public ngOnDestroy(): void {
-    Offline.off('down', this._downHandler);
-    Offline.off('up', this._upHandler);
+    window.removeEventListener('online', this._upHandler);
+    window.removeEventListener('offline', this._downHandler);
 
     this._destroy$.next();
     this._destroy$.complete();
@@ -73,36 +79,33 @@ export class FsConnectionService implements OnDestroy {
 
   private _subscribe() {
     this._downHandler = () => {
-      this._downSub.next();
+      this._connection$.next(false);
     };
 
     this._upHandler = () => {
-      this._upSub.next();
+      this._connection$.next(true);
     };
 
-    Offline.on('down', this._downHandler);
-    Offline.on('up', this._upHandler);
-  }
+    window.addEventListener('online', this._upHandler);
+    window.addEventListener('offline', this._downHandler);
 
-  private _setOptions() {
-    Offline.options = {
-      // Should we check the connection status immediatly on page load.
-      checkOnLoad: false,
+    this._connection$
+      .pipe(
+        filter(() => this._config.showBanner),
+        takeUntil(this._destroy$),
+      )
+      .subscribe((value) => {
+        this.showBanner = value;
+      });
 
-      // Should we monitor AJAX requests to help decide if we have a connection.
-      interceptRequests: true,
-
-      // Should we automatically retest periodically when the connection is down (set to false to disable).
-      reconnect: false,
-
-      // Should we store and attempt to remake requests which fail while the connection is down.
-      requests: false,
-
-      // Should we show a snake game while the connection is down to keep the user entertained?
-      // It's not included in the normal build, you should bring in js/snake.js in addition to
-      // offline.min.js.
-      game: false,
-    } as any; // because OfflineOptions interface has wrong description
+    timer(0, 10000)
+      .pipe(
+        filter(() => this.isDown),
+        takeUntil(this._destroy$),
+      )
+      .subscribe(() => {
+        this._connection$.next(false);
+      });
   }
 
 }

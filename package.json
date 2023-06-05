@@ -2,7 +2,7 @@
   "name": "@firestitch/connection",
   "title": "Connection",
   "description": "@firestitch/connection",
-  "version": "12.0.8",
+  "version": "12.0.10",
   "repository": {
     "type": "git",
     "url": "https://github.com/Firestitch/ngx-connection"
@@ -71,7 +71,6 @@
     "@types/offline-js": "^0.7.28"
   },
   "dependencies": {
-    "offline-js": "^0.7.19",
     "tslib": "^2.0.0"
   }
 }
