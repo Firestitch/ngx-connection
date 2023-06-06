@@ -18,7 +18,7 @@ export class FsConnectionService implements OnDestroy {
   constructor(
     @Optional() @Inject(FS_CONNECTION_CONFIG) private _config: FsConnectionConfig,
   ) {
-    this._subscribe();
+    this._init();
   }
 
   public get isDown() {
@@ -77,7 +77,16 @@ export class FsConnectionService implements OnDestroy {
     this._destroy$.complete();
   }
 
-  private _subscribe() {
+  private _init() {
+    this._connection$
+    .pipe(
+      filter(() => this._config.showBanner),
+      takeUntil(this._destroy$),
+    )
+    .subscribe((value) => {
+      this.showBanner = value;
+    });
+
     this._downHandler = () => {
       this._connection$.next(false);
     };
@@ -88,15 +97,6 @@ export class FsConnectionService implements OnDestroy {
 
     window.addEventListener('online', this._upHandler);
     window.addEventListener('offline', this._downHandler);
-
-    this._connection$
-      .pipe(
-        filter(() => this._config.showBanner),
-        takeUntil(this._destroy$),
-      )
-      .subscribe((value) => {
-        this.showBanner = value;
-      });
 
     timer(0, 10000)
       .pipe(
