@@ -103,7 +103,7 @@ export class FsConnectionService implements OnDestroy {
         takeUntil(this._destroy$),
       )
       .subscribe(() => {
-        this._connection$.next(false);
+        this._connection$.next(this.isUp);
       });
   }
 
