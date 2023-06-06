@@ -100,7 +100,6 @@ export class FsConnectionService implements OnDestroy {
 
     timer(0, 10000)
       .pipe(
-        filter(() => this.isDown),
         takeUntil(this._destroy$),
       )
       .subscribe(() => {
