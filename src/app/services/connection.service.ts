@@ -6,7 +6,9 @@ import { FS_CONNECTION_CONFIG } from '../injectors';
 import { FsConnectionConfig } from '../interfaces';
 
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class FsConnectionService implements OnDestroy {
 
   private _connection$ = new Subject<boolean>();
@@ -17,9 +19,7 @@ export class FsConnectionService implements OnDestroy {
 
   constructor(
     @Optional() @Inject(FS_CONNECTION_CONFIG) private _config: FsConnectionConfig,
-  ) {
-    this._init();
-  }
+  ) {}
 
   public get isDown() {
     return !navigator.onLine;
@@ -77,7 +77,7 @@ export class FsConnectionService implements OnDestroy {
     this._destroy$.complete();
   }
 
-  private _init() {
+  public init() {
     this._connection$
     .pipe(
       filter(() => this._config.showBanner),

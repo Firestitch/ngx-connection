@@ -11,6 +11,12 @@ import { FS_CONNECTION_CONFIG } from './injectors';
   ]
 })
 export class FsConnectionModule {
+  public constructor(
+    public _service: FsConnectionService
+  ) {
+    this._service.init();
+  }
+
   static forRoot(config?: FsConnectionConfig): ModuleWithProviders<FsConnectionModule> {
     return {
       ngModule: FsConnectionModule,
@@ -20,4 +26,6 @@ export class FsConnectionModule {
       ]
     };
   }
+
+
 }
