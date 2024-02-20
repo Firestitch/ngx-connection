@@ -57,11 +57,5 @@
   },
   "engines": {
     "node": ">=6.0.0"
-  },
-  "dependencies": {
-    "@firestitch/api": "^12.4.0",
-    "@firestitch/core": "^12.1.0",
-    "@firestitch/date": "^12.4.5",
-    "@firestitch/file": "^12.18.6"
   }
 }
