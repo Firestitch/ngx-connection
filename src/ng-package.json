@@ -4,12 +4,12 @@
   "lib": {
     "entryFile": "public_api.ts"
   },
-  "whitelistedNonPeerDependencies": [
-    "offline-js"
-  ],
   "assets": [
     "./styles.scss",
     "./app/styles/**/*.scss",
     "./app/styles/**/*.sass"
+  ],
+  "allowedNonPeerDependencies": [
+    "offline-js"
   ]
 }
