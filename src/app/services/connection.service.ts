@@ -73,7 +73,7 @@ export class FsConnectionService implements OnDestroy {
     window.removeEventListener('online', this._upHandler);
     window.removeEventListener('offline', this._downHandler);
 
-    this._destroy$.next();
+    this._destroy$.next(null);
     this._destroy$.complete();
   }
 
