@@ -1,7 +1,8 @@
 import { Inject, Injectable, OnDestroy, Optional } from '@angular/core';
-import { Observable, Subject, timer } from 'rxjs';
 
+import { Observable, Subject, timer } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
+
 import { FS_CONNECTION_CONFIG } from '../injectors';
 import { FsConnectionConfig } from '../interfaces';
 
@@ -19,7 +20,12 @@ export class FsConnectionService implements OnDestroy {
 
   constructor(
     @Optional() @Inject(FS_CONNECTION_CONFIG) private _config: FsConnectionConfig,
-  ) {}
+  ) {
+    this._config = {
+      showBanner: true,
+      ...this._config,
+    };
+  }
 
   public get isDown() {
     return !navigator.onLine;
@@ -79,13 +85,13 @@ export class FsConnectionService implements OnDestroy {
 
   public init() {
     this._connection$
-    .pipe(
-      filter(() => this._config.showBanner),
-      takeUntil(this._destroy$),
-    )
-    .subscribe((value) => {
-      this.showBanner = value;
-    });
+      .pipe(
+        filter(() => this._config.showBanner),
+        takeUntil(this._destroy$),
+      )
+      .subscribe((value) => {
+        this.showBanner = value;
+      });
 
     this._downHandler = () => {
       this._connection$.next(false);
