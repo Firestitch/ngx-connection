@@ -1,4 +1,4 @@
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule, inject } from '@angular/core';
 
 import { FS_CONNECTION_CONFIG } from './injectors';
 import { FsConnectionConfig } from './interfaces';
@@ -11,10 +11,10 @@ import { FsConnectionService } from './services/connection.service';
   ],
 })
 export class FsConnectionModule {
+  _service = inject(FsConnectionService);
+
   
-  constructor(
-    public _service: FsConnectionService,
-  ) {
+  constructor() {
     this._service.init();
   }
 

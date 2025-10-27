@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FsConnectionService } from '@firestitch/connection';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -11,14 +11,12 @@ import { MatAnchor } from '@angular/material/button';
     imports: [MatAnchor]
 })
 export class ConnectionBaseExampleComponent implements OnInit, OnDestroy {
+  private _connection = inject(FsConnectionService);
+
 
   public showBanner = true;
 
   private _destroy$ = new Subject();
-
-  constructor(
-    private _connection: FsConnectionService
-    ) {}
 
   public ngOnInit() {
     

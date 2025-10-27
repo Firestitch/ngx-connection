@@ -1,4 +1,4 @@
-import { Inject, Injectable, OnDestroy, Optional } from '@angular/core';
+import { Injectable, OnDestroy, inject } from '@angular/core';
 
 import { Observable, Subject, timer } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
@@ -11,6 +11,8 @@ import { FsConnectionConfig } from '../interfaces';
   providedIn: 'root',
 })
 export class FsConnectionService implements OnDestroy {
+  private _config = inject<FsConnectionConfig>(FS_CONNECTION_CONFIG, { optional: true });
+
 
   private _connection$ = new Subject<boolean>();
   private _destroy$ = new Subject();
@@ -18,9 +20,7 @@ export class FsConnectionService implements OnDestroy {
   private _downHandler: () => void;
   private _upHandler: () => void;
 
-  constructor(
-    @Optional() @Inject(FS_CONNECTION_CONFIG) private _config: FsConnectionConfig,
-  ) {
+  constructor() {
     this._config = {
       showBanner: true,
       ...this._config,
