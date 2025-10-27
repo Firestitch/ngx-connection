@@ -2,10 +2,13 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FsConnectionService } from '@firestitch/connection';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { MatAnchor } from '@angular/material/button';
 
 @Component({
-  selector: 'connection-base-example',
-  templateUrl: 'connection-base-example.component.html'
+    selector: 'connection-base-example',
+    templateUrl: 'connection-base-example.component.html',
+    standalone: true,
+    imports: [MatAnchor]
 })
 export class ConnectionBaseExampleComponent implements OnInit, OnDestroy {
 
